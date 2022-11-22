@@ -36,4 +36,5 @@ def blur_draw(widget,context):
     loginwindow.draw(widget,context)
 
 def module_init():
-    loginwindow.window.connect("draw",blur_draw)
+    if get("enabled",True,"blur"):
+        loginwindow.window.connect("draw",blur_draw)
