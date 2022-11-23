@@ -1,4 +1,7 @@
-# Python 3 server example
+#!/usr/bin/python3
+#### Security Warning: This module is not support ssl. your password may leak!!!
+####You should use stunnel for cypt http server connection.
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 
