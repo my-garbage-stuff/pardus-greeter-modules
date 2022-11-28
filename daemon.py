@@ -8,6 +8,7 @@ def module_init():
             os.unlink("/{}/pardus-greeter".format(busdir))
         os.mkfifo("/{}/pardus-greeter".format(busdir))
         f = open("/{}/pardus-greeter".format(busdir),"r")
+        lightdm.cancel()
         for line in f.read().split("\n"):
             if line.startswith("username:"):
                 lightdm.username = line[9:]
