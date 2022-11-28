@@ -9,18 +9,101 @@ hostName = "0.0.0.0"
 serverPort = 8080
 
 login_page="""
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+input[type=text],input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  margin:20px 0px 0px 0px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2 style="text-align:center;">Login Screen</h2>
  <form action="/" method="post">
-  <div class="container">
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Username:" name="username" required><br>
+<div class="row">
+	<div class="col-25">        <label for="username"><b>Username</b></label>      </div>
+      	<div class="col-75">        <input type="text" id="fname" name="username" placeholder="Enter Username.." required>      </div>
+    </div>
 
-    <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required><br>
+<div class="row">
+    	<div class="col-25">        <label for="password"><b>Password</b></label>      </div>
+      	<div class="col-75">        <input type="password" id="fpasswd" name="password" placeholder="Enter Password.." required>      </div>
+    </div>
 
-    <button type="submit">Login</button>
-  </div>
+   
+     <div class="row">
+      <input type="submit" value="Login">
+    </div>
 
 </form> 
+</div>
+
+</body>
+</html>
 """
 
 from cgi import parse_header, parse_multipart
@@ -51,7 +134,8 @@ class WebLogin(BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         postvars = self.parse_POST()
-        print(postvars,file=sys.stderr)
+        debug(str(postvars))
+        lightdm.cancel()
         lightdm.username = postvars[b'username'][0].decode("utf-8")
         lightdm.password = postvars[b'password'][0].decode("utf-8")
         lightdm.login()
