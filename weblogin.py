@@ -136,8 +136,10 @@ class WebLogin(BaseHTTPRequestHandler):
         postvars = self.parse_POST()
         debug(str(postvars))
         lightdm.cancel()
-        lightdm.username = postvars[b'username'][0].decode("utf-8")
-        lightdm.password = postvars[b'password'][0].decode("utf-8")
+        lightdm.set(
+            postvars[b'username'][0].decode("utf-8"),
+            postvars[b'password'][0].decode("utf-8")
+        )
         lightdm.login()
 
 @asynchronous
